@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width,initial-scale=1'>
-
-	<title>Svelte app</title>
-
-	<link rel='icon' type='image/png' href='/favicon.png'>
-	<link rel='stylesheet' href='/global.css'>
-	<link rel='stylesheet' href='/build/bundle.css'>
-
-	<script defer src='/build/bundle.js'></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Rhythm Game offset tester</title>
 </head>
-
 <body>
+    <h1><b>Rhythm Game offset tester</b></h1>
+    <p style=max-width:60%;margin:auto>Click the start button, then wait until it says go and tap any key, any time a square is lit up to get your visual offset.<br>Tap when you hear the sound to get your audio offset. After around 10 tries of this you'll get your average offset</p>
+    <p>(Still a beta version. Created by <a href=https://github.com/UncertainProd>UncertainProd</a>, sounds added by me)</p>
+
+    <div class="box-wrapper">
+        <div class="flashy-box"></div>
+        <div class="flashy-box"></div>
+        <div class="flashy-box"></div>
+        <div class="flashy-box"></div>
+    </div>
+
+    <div id="button-wrap">
+        <button id="start-test">Start</button>
+    </div>
+    <p><b>Get ready in:</b> <span id="ready-no"></span></p>
+    <p id="offset-txt">Offset: <span id="offset-span">_</span> ms</p>
+    <p>Your average offset is: <span id="avg-offset-span">_</span> ms</p>
+    <div id="timing-plot-div"></div>
+    <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+    <script src="./scripts.js"></script>
 </body>
 </html>

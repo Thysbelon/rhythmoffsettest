@@ -37,7 +37,11 @@ function offsetToColor(offset_val) {
 
 const plot_div = document.getElementById('timing-plot-div');
 
+var ctx;
+var osc=[null,null,null,null]
+
 startbtn.addEventListener("click", ()=>{
+	if (ctx!==null){ctx=new AudioContext()}
     if (mode === 0) {
         // reset plots
         let plot_config = {
@@ -104,10 +108,20 @@ startbtn.addEventListener("click", ()=>{
 
 function runTest(){
     let boxindex = 0;
+	osc[0]=ctx.createOscillator();
+	osc[0].connect(ctx.destination);
+	var gaino=new GainNode(ctx)
+	gaino.connect(ctx.destination)
     testid = setInterval(()=>{
         window.removeEventListener('keypress', timeKeyPress);
         boxindex > 0 ? squares[(boxindex-1)%4].style.backgroundColor = "red" : null;
+		osc[(boxindex+1)%4]=ctx.createOscillator()
+		osc[(boxindex+1)%4].connect(gaino);
         squares[boxindex%4].style.backgroundColor = "blue";
+		gaino.gain.setValueAtTime(1, ctx.currentTime)
+		osc[boxindex%4].start(ctx.currentTime+0.0001)
+		gaino.gain.linearRampToValueAtTime(0.001, ctx.currentTime+0.14);
+		osc[boxindex%4].stop(ctx.currentTime+0.15)
         starttime = Date.now();
         window.addEventListener("keypress", timeKeyPress);
         boxindex++;
